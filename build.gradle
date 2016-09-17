@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
+description = 'Video game'
+version = '1.0.0'
+
+mainClassName = 'net.seabears.games.hamblaster.Game'
+applicationDefaultJvmArgs = ["-Djava.library.path=lib/natives/linux"]
+sourceCompatibility = 1.8
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Ham Blaster',
+                   'Implementation-Version': version
+    }
+}
+
+shadowJar {
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+}
+
+repositories {
+    mavenCentral()
+    // for LWJGL 3
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+}
+
+dependencies {
+    compile 'org.lwjgl.lwjgl:lwjgl:2.9.1'
+    compile 'org.lwjgl.lwjgl:lwjgl-platform:2.9.1:natives-linux'
+    compile 'org.lwjgl.lwjgl:lwjgl-platform:2.9.1:natives-osx'
+    compile 'org.lwjgl.lwjgl:lwjgl-platform:2.9.1:natives-windows'
+    compile 'org.slick2d:slick2d-core:1.0.1'
+    compile 'java3d:vecmath:1.3.1'
+    testCompile 'junit:junit:4.12'
+}
